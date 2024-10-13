@@ -1,4 +1,4 @@
-import BodyDoublingApp from "@/components/minimalist-body-doubling-app";
+import BodyDoublingApp from "@/components/BodyDoubling";
 
 export default function Page() {
   return <BodyDoublingApp />;
