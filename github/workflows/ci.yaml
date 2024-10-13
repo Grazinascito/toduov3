@@ -1,59 +1,33 @@
-name: CI/CD Pipeline
+# Name of the workflow as it will appear in the GitHub Actions tab
+name: CI
 
+# Events that trigger the workflow
 on:
-  push:
-    branches:
-      - main
-      - homologation
+  push:  # Trigger when code is pushed
+    branches: [main]  # Only on the 'main' branch
+  pull_request:  # Trigger on pull requests
+    branches: [main]  # Only when the base branch of the PR is 'main'
 
+# A job represents a collection of steps that are executed sequentially on the same runner
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build:  # Name of the job
+    runs-on: ubuntu-latest  # The type of virtual host to run the job on
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x]
-
+    # Steps are a series of tasks that are executed sequentially in a job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository  # Name of the step
+      uses: actions/checkout@v2  # Action to check out the repository code
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Set up Node.js  # Name of the step
+      uses: actions/setup-node@v2  # Action to set up a Node.js environment
+      with:
+        node-version: '20'  # Specify the version of Node.js to use
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies  # Name of the step
+      run: npm install  # Command to install Node.js dependencies
 
-      - name: Build project
-        run: npm run build
+    - name: Run tests  # Name of the step
+      run: npm test  # Command to run tests, assumes a test script exists in package.json
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16.x
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "Deploying to Production environment"
-        # Add your production deployment steps here
-
-      - name: Deploy to Homologation
-        if: github.ref == 'refs/heads/homologation'
-        run: echo "Deploying to Homologation environment"
-        # Add your homologation deployment steps here
+    - name: Lint  # Name of the step
+      run: npm run lint  # Command to run the linting process, assumes a lint script exists in package.json
