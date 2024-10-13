@@ -1,33 +1,42 @@
-# Name of the workflow as it will appear in the GitHub Actions tab
 name: CI
 
-# Events that trigger the workflow
 on:
-  push:  # Trigger when code is pushed
-    branches: [main]  # Only on the 'main' branch
-  pull_request:  # Trigger on pull requests
-    branches: [main]  # Only when the base branch of the PR is 'main'
+  push:
+    branches:
+      - main  # Triggers on pushes to the main branch
+      - hml   # Triggers on pushes to the hml branch
+  pull_request:
+    branches:
+      - main  # Triggers on pull requests targeting the main branch
+      - hml   # Triggers on pull requests targeting the hml branch
 
-# A job represents a collection of steps that are executed sequentially on the same runner
 jobs:
-  build:  # Name of the job
-    runs-on: ubuntu-latest  # The type of virtual host to run the job on
+  build:
+    runs-on: ubuntu-latest
 
-    # Steps are a series of tasks that are executed sequentially in a job
     steps:
-    - name: Checkout repository  # Name of the step
-      uses: actions/checkout@v2  # Action to check out the repository code
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Set up Node.js  # Name of the step
-      uses: actions/setup-node@v2  # Action to set up a Node.js environment
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        node-version: '20'  # Specify the version of Node.js to use
+        node-version: '16'
 
-    - name: Install dependencies  # Name of the step
-      run: npm install  # Command to install Node.js dependencies
+    - name: Install dependencies
+      run: npm install
 
-    - name: Run tests  # Name of the step
-      run: npm test  # Command to run tests, assumes a test script exists in package.json
+    - name: Run tests
+      run: npm test
 
-    - name: Lint  # Name of the step
-      run: npm run lint  # Command to run the linting process, assumes a lint script exists in package.json
+    - name: Lint
+      run: npm run lint
+
+    # Additional steps for deployment based on the branch
+    - name: Deploy
+      if: github.ref == 'refs/heads/main'
+      run: echo "Deploying to production environment"
+
+    - name: Deploy to Hml
+      if: github.ref == 'refs/heads/hml'
+      run: echo "Deploying to homologation environment"
