@@ -1,24 +1,20 @@
-import { User } from "@supabase/supabase-js";
+"use client";
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { UserProps } from "../types";
 
 // lib/context/UserContext.tsx
-interface User {
-  id: string;
-  username: string; // Ensure this field is defined here
-}
 
 interface UserContextProps {
-  currentUser: User | null;
-  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>;
+  currentUser: UserProps | null;
+  setCurrentUser: React.Dispatch<React.SetStateAction<UserProps | null>>;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 // User Provider component
-export const UserProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null); // or fetch from local storage/session
+export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<UserProps | null>(null); // or fetch from local storage/session
 
   return (
     <UserContext.Provider value={{ currentUser, setCurrentUser }}>

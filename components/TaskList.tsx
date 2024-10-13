@@ -1,3 +1,4 @@
+"use client";
 import { Calendar, MoreHorizontal, Tag } from "lucide-react";
 import { Checkbox } from "./ui/checkbox";
 import {

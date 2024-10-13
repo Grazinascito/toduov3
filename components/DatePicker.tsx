@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "./ui/button";

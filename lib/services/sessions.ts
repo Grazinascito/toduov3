@@ -1,3 +1,5 @@
+"use client";
+
 import { supabase } from "./supabase"; // Ensure you have the Supabase client initialized
 // Define types and interfaces
 
@@ -31,11 +33,11 @@ export const createSession = async (
 
     if (error) throw error;
 
-    if (data && data.length > 0) {
-      // Add the host to the participants table
-      await addParticipant(data[0].id, hostUserId, "host");
-      return data[0];
-    }
+    // if (data && data.length > 0) {
+    //   // Add the host to the participants table
+    //   await addParticipant(data[0].id, hostUserId, "host");
+    //   return data[0];
+    // }
     return null;
   } catch (error) {
     console.error("Error creating session:", error);

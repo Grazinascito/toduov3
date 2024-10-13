@@ -1,3 +1,6 @@
+"use client";
+
+
 import React, { useState } from "react";
 import { TaskList } from "./TaskList";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
