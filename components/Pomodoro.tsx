@@ -3,7 +3,8 @@
 import { Pause, Play, RotateCcw } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
+import { Card, CardTitle, CardContent } from "./ui/card";
+import { ShareButton } from "./ShareButton";
 
 const Pomodoro: React.FC = () => {
   const [timer, setTimer] = useState(25 * 60);
@@ -47,10 +48,15 @@ const Pomodoro: React.FC = () => {
   };
 
   return (
-    <Card className="mb-8">
-      <CardHeader>
-        <CardTitle>Pomodoro Timer</CardTitle>
-      </CardHeader>
+    <Card className="mb-8 p-4">
+      <div className="flex justify-between items-center">
+        <div>
+          <CardTitle>Pomodoro Timer</CardTitle>
+        </div>
+        <div>
+          <ShareButton />
+        </div>
+      </div>
       <CardContent>
         <div className="text-center">
           <div className="text-4xl font-bold mb-4 text-gray-700">
