@@ -4,8 +4,9 @@ import React from "react";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "./ui/popover";
-import { Calendar } from "./ui/calendar";
+
 import { format } from "date-fns";
+import { Calendar } from "./ui/calendar";
 
 type DatePickerProps = {
   selectedDate: Date | null;
