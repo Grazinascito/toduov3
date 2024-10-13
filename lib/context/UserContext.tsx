@@ -3,8 +3,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { UserProps } from "../types";
 
-// lib/context/UserContext.tsx
-
 interface UserContextProps {
   currentUser: UserProps | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<UserProps | null>>;

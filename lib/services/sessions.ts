@@ -1,10 +1,6 @@
 "use client";
 
-import { supabase } from "./supabase"; // Ensure you have the Supabase client initialized
-// Define types and interfaces
-
-
-// Session interface
+import { supabase } from "./supabase"; 
 interface Session {
   id: string;
   host_user_id: string;

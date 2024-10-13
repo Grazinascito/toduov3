@@ -36,7 +36,7 @@ const GuestTasks: React.FC = () => {
     <div className="w-full">
       <Card>
         <CardHeader>
-          <CardTitle>Friends Tasks</CardTitle>
+          <CardTitle>Guest Tasks</CardTitle>
         </CardHeader>
         <CardContent>
           {guestTasks.map((task) => (

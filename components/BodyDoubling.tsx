@@ -6,7 +6,7 @@ import { addParticipant, createSession } from "@/lib/services/sessions";
 import { useUser } from "@/lib/context/UserContext";
 import Pomodoro from "./Pomodoro";
 import HostUserTasks from "./HostUserTasks";
-import FriendTasks from "./GuestTasks";
+import GuestTasks from "./GuestTasks";
 
 const BodyDoublingApp: React.FC = () => {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -44,7 +44,10 @@ const BodyDoublingApp: React.FC = () => {
       <Pomodoro />
       <div className="flex gap-4">
         <div className="w-full">
-          {isHost ? <HostUserTasks /> : <FriendTasks />}
+          <HostUserTasks />
+        </div>
+        <div className="w-full">
+          <GuestTasks />
         </div>
       </div>
     </div>
