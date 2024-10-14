@@ -1,12 +1,10 @@
 "use client";
 
-
 import React, { useState } from "react";
 import { TaskList } from "./TaskList";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 import AddTaskDialog from "./AddTaskDialog";
 import { TaskProps } from "@/lib/types";
- // Assuming Task type is defined in a separate file for clarity.
 
 const HostUserTasks: React.FC = () => {
   const [userTasks, setUserTasks] = useState<TaskProps[]>([
