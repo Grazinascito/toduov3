@@ -1,15 +1,26 @@
 "use client";
 
-import { Pause, Play, RotateCcw } from "lucide-react";
+import { Pause, Play, RotateCcw, Settings } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import { Card, CardTitle, CardContent } from "./ui/card";
+import { Card, CardTitle, CardContent, CardHeader } from "./ui/card";
 import { ShareButton } from "./ShareButton";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@radix-ui/react-popover";
 
 const Pomodoro: React.FC = () => {
   const [timer, setTimer] = useState(25 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [timerMode, setTimerMode] = useState("work");
+  const [isActive, setIsActive] = useState(false);
+  const [sessions, setSessions] = useState(4);
+  const [focusTime, setFocusTime] = useState(25);
+
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (isTimerRunning && timer > 0) {
@@ -22,12 +33,12 @@ const Pomodoro: React.FC = () => {
         setTimer(5 * 60);
       } else {
         setTimerMode("work");
-        setTimer(25 * 60);
+        setTimer(focusTime * 60);
       }
       setIsTimerRunning(false);
     }
     return () => clearInterval(interval);
-  }, [isTimerRunning, timer, timerMode]);
+  }, [isTimerRunning, timer, timerMode, focusTime]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -39,43 +50,92 @@ const Pomodoro: React.FC = () => {
 
   const toggleTimer = () => {
     setIsTimerRunning(!isTimerRunning);
+    setIsActive(!isActive);
   };
 
   const resetTimer = () => {
     setIsTimerRunning(false);
     setTimerMode("work");
-    setTimer(25 * 60);
+    setTimer(focusTime * 60);
+  };
+
+  const handleFocusTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFocusTime(parseInt(e.target.value));
+    setTimer(parseInt(e.target.value) * 60);
   };
 
   return (
-    <Card className="mb-8 p-4">
-      <div className="flex justify-between items-center">
-        <div>
-          <CardTitle>Pomodoro Timer</CardTitle>
-        </div>
-        <div>
+    <div className=" flex items-center justify-center mb-10">
+      <Card className="w-[300px]">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardTitle className="text-sm font-medium">Pomodoro Timer</CardTitle>
           <ShareButton />
-        </div>
-      </div>
-      <CardContent>
-        <div className="text-center">
-          <div className="text-4xl font-bold mb-4 text-gray-700">
-            {formatTime(timer)}
+        </CardHeader>
+        <CardContent>
+          <div className="text-center">
+            <div className="text-6xl font-bold mb-4">{formatTime(timer)}</div>
+            <div className="space-x-2">
+              <Button variant="outline" size="icon" onClick={toggleTimer}>
+                {isActive ? (
+                  <Pause className="h-4 w-4" />
+                ) : (
+                  <Play className="h-4 w-4" />
+                )}
+              </Button>
+              <Button variant="outline" size="icon" onClick={resetTimer}>
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" size="icon">
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 bg-white p-4 mt-2 border rounded-md">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <h4 className="font-medium leading-none">
+                        Timer Settings
+                      </h4>
+                      <p className="text-sm text-muted-foreground">
+                        Adjust your focus time and sessions.
+                      </p>
+                    </div>
+                    <div className="grid gap-2">
+                      <div className="grid grid-cols-3 items-center gap-4">
+                        <Label htmlFor="focus-time">Focus Time</Label>
+                        <Input
+                          id="focus-time"
+                          type="number"
+                          className="col-span-2 h-8"
+                          value={focusTime}
+                          onChange={handleFocusTimeChange}
+                          min={1}
+                        />
+                      </div>
+                      <div className="grid grid-cols-3 items-center gap-4">
+                        <Label htmlFor="sessions">Sessions</Label>
+                        <Input
+                          id="sessions"
+                          type="number"
+                          className="col-span-2 h-8"
+                          value={sessions}
+                          onChange={(e) =>
+                            setSessions(parseInt(e.target.value))
+                          }
+                          min={1}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+            <p className="text-sm text-muted-foreground mt-2">Focus Time</p>
           </div>
-          <div className="flex justify-center space-x-4 mb-4">
-            <Button onClick={toggleTimer} variant="outline" size="sm">
-              {isTimerRunning ? <Pause size={18} /> : <Play size={18} />}
-            </Button>
-            <Button onClick={resetTimer} variant="outline" size="sm">
-              <RotateCcw size={18} />
-            </Button>
-          </div>
-          <div className="text-sm text-gray-500">
-            {timerMode === "work" ? "Focus Time" : "Break Time"}
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
