@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
-import { Copy, Check } from "lucide-react";
+import { Copy, Check, Share } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +31,11 @@ export const ShareButton = () => {
     setCurrentUrl(url);
   }, [pathname, searchParams]);
 
+  const createShareableLink = (sessionId: string) => {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}/session/${sessionId}`;
+  };
+
   const handleCopy = () => {
     if (currentUrl) {
       navigator.clipboard.writeText(currentUrl as string).then(() => {
@@ -42,7 +48,9 @@ export const ShareButton = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Share</Button>
+        <Button variant="ghost">
+          <Share className="h-4 w-4" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
