@@ -1,5 +1,10 @@
-import { MinimalistBodyDoublingAppComponent } from "@/components/minimalist-body-doubling-app"
+import React, { Suspense } from "react";
+import BodyDoublingApp from "@/components/BodyDoubling";
 
 export default function Page() {
-  return <MinimalistBodyDoublingAppComponent />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <BodyDoublingApp />
+    </Suspense>
+  );
 }
