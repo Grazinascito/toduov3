@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/popover";
 import { ChevronRight, Plus, Check, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { format } from "date-fns";
+import { formatDate } from "@/lib/utils";
 
 type Task = {
   id: string;
@@ -215,7 +215,7 @@ export default function HostTasks() {
   };
 
   return (
-    <Card className="w-full max-w-[450px]">
+    <Card className="w-[450px]">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Your Tasks</CardTitle>
         <Button onClick={addNewProject} size="sm" variant="outline">
@@ -335,7 +335,7 @@ export default function HostTasks() {
                             variant="ghost"
                             className="w-[120px] pl-3 text-left font-normal"
                           >
-                            {format(task.date, "PPP")}
+                            {formatDate(task.date)}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">

@@ -10,16 +10,17 @@ const BodyDoublingApp: React.FC = () => {
   const [isHost, setIsHost] = useState<boolean>(false);
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-gray-50">
+    <div className="h-screen mx-auto p-6 bg-gray-50">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">
         Body Doubling App
       </h1>
       <Pomodoro />
-      <div className="flex gap-4">
-        <div className="w-full">
+
+      <div className="flex justify-center gap-10">
+        <div className="">
           <HostUserTasks />
         </div>
-        <div className="w-full">
+        <div className="">
           <HostUserTasks />
         </div>
       </div>
